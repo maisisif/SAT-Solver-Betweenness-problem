@@ -1,0 +1,8 @@
+# A small satisfiable instance with 5 elements and 3 triples.
+# From (2,4,5) and (3,5,4) we get 2 < 4 < 5 < 3 (or the reverse),
+# then (1,2,3) puts 1 on the other side of 2: the only orderings are
+# 1 2 4 5 3 and its reverse 3 5 4 2 1.
+5 3
+1 2 3
+2 4 5
+3 5 4

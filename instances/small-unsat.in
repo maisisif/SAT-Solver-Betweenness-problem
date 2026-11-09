@@ -1,0 +1,8 @@
+# A small unsatisfiable instance with 4 elements and 4 "cyclic" triples.
+# (1,2,3) and (2,3,4) force the ordering 1 2 3 4 (or its reverse),
+# but then 4 is not between 3 and 1, so (3,4,1) cannot hold.
+4 4
+1 2 3
+2 3 4
+3 4 1
+4 1 2
