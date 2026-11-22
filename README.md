@@ -8,9 +8,9 @@ The repository contains a compiled binary `glucose` (macOS, Apple Silicon). On o
 
 ## Problem description
 
-Given a set of elements $\{1, \dots, n\}$ and a set $T$ of triples $(a, b, c)$ of distinct elements, decide whether there exists an ordering of the elements such that for every triple, $b$ is placed somewhere between $a$ and $c$.
+Given a set of elements $\lbrace 1, \dots, n \rbrace$ and a set $T$ of triples $(a, b, c)$ of distinct elements, decide whether there exists an ordering of the elements such that for every triple, $b$ is placed somewhere between $a$ and $c$.
 
-The goal is to find a bijection $\pi : \{1, \dots, n\} \to \{1, \dots, n\}$ (the position of each element) such that for every triple $(a, b, c) \in T$ it holds that $\pi(a) < \pi(b) < \pi(c)$ or $\pi(c) < \pi(b) < \pi(a)$. The elements of a triple do not have to be next to each other in the ordering. The problem is known to be NP-complete.
+The goal is to find a bijection $\pi : \lbrace 1, \dots, n \rbrace \to \lbrace 1, \dots, n \rbrace$ (the position of each element) such that for every triple $(a, b, c) \in T$ it holds that $\pi(a) < \pi(b) < \pi(c)$ or $\pi(c) < \pi(b) < \pi(a)$. The elements of a triple do not have to be next to each other in the ordering. The problem is known to be NP-complete.
 
 An example of a valid input format is:
 
@@ -39,9 +39,11 @@ Start by defining a variable $x_{i,j}$ for each pair of elements $1 \le i < j \l
 - If $x_{i,j}$ is True, element $i$ is placed before element $j$.
 - If $x_{i,j}$ is False, element $j$ is placed before element $i$.
 
-There are no variables for $i > j$, since "$j$ is before $i$" is just $\neg x_{i,j}$. To make the notation shorter, for any two distinct elements $i, j$ we write $B_{i,j}$ for the literal saying that $i$ is before $j$:
+There are no variables for $i > j$, since $j$ being before $i$ is just $\neg x_{i,j}$. To make the notation shorter, for any two distinct elements $i, j$ we write $B_{i,j}$ for the literal saying that $i$ is before $j$:
 
-$$B_{i,j} = \begin{cases} x_{i,j} & \text{if } i < j \\ \neg x_{j,i} & \text{if } i > j \end{cases}$$
+```math
+B_{i,j} = \begin{cases} x_{i,j} & \text{if } i < j \\ \neg x_{j,i} & \text{if } i > j \end{cases}
+```
 
 For every pair exactly one of $B_{i,j}$, $B_{j,i}$ is true, so every two elements are compared and the relation is antisymmetric without any extra clauses. The following constraints are added:
 
@@ -57,7 +59,7 @@ Obtained in the end:
 - $\binom{n}{2} = \frac{n(n-1)}{2}$ variables
 - $2\binom{n}{3} + 2m$ clauses (for example 10 variables and 26 clauses for `small-sat.in` with $n = 5$, $m = 3$)
 
-The ordering is decoded from a satisfying assignment by computing the position of every element as the number of elements before it plus one, $\pi(i) = 1 + |\{ j \ne i : B_{j,i} \text{ is true} \}|$.
+The ordering is decoded from a satisfying assignment by computing the position of every element as the number of elements before it plus one, $\pi(i) = 1 + |\lbrace j \ne i : B_{j,i} \text{ is true} \rbrace|$.
 
 The CNF is written in the standard DIMACS format.
 
